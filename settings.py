@@ -5,7 +5,6 @@ class Site(Site):
 
     title = "Lino LETS Tutorial (1)"
 
-    #~ user_model = None
 
     def setup_menu(self, ui, profile, main):
         m = main.add_menu("master", "Master")
@@ -27,7 +26,6 @@ SITE = Site(globals(), 'lets')
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
-        #'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
         'NAME': 'lino2',
 	'USER': 'root',
     }
