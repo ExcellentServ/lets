@@ -35,23 +35,23 @@ class Places(dd.Table):
 
 
 class Provider(dd.Model):
-    member = models.OneToOneField(Member)
+    # member = models.OneToOneField(Member)
 
     def __unicode__(self):
         return "Provider: " + self.Member.lastname
 
 
-class Providers(dd.Table):
+class Providers(Member):
     model = Provider
 
     detail_layout = """
-    id lastname place email
-    OffersByProvider
+    id lastname email
+    PlacesByMember OffersByProvider
     """
 
 
-class Customer(dd.Model):
-    member = models.OneToOneField(Member)
+class Customer(Member):
+    # member = models.OneToOneField(Member)
 
     def __unicode__(self):
         return "Customer:" + self.lastname
@@ -61,8 +61,8 @@ class Customers(dd.Table):
     model = Customer
 
     detail_layout = """
-    id lastname place email
-    DemandsByCustomer
+    id lastname email
+    PlacesByMember DemandsByCustomer
     """
 
 
@@ -125,3 +125,6 @@ class DemandsByCustomer(Demands):
 
 class DemandsByProduct(Demands):
     master_key = 'product'
+
+class PlacesByMember(Places):
+    master_key = 'member'
