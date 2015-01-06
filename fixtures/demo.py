@@ -1,6 +1,7 @@
 # -*- coding: UTF-8 -*-
 from lino.dd import resolve_model
-
+#add datetime
+from datetime import datetime
 
 def findbyname(model, name):
     """
@@ -28,13 +29,16 @@ def objects():
     Offer = resolve_model('lets.Offer')
     Demand = resolve_model('lets.Demand')
 
-    yield Place(country="Egypt",city="New Cairo",postcode="11212",street="3rd settlment")
-    yield Place(country="Estonia",city="New City",postcode="11212",street="High Way")
+    yield Member(id=1,firstname="Mahmoud",lastname="Mamdouh",email="sharedup@gmail.com",company="Excllent Serv",date_joined= datetime.now())
+    yield Member(id=2,firstname="Luc",lastname="Saffre",email="luc@gmail.com",company="Lino",date_joined=datetime.now())
+
+
+    yield Place(country="Egypt",city="New Cairo",postcode="11212",street="3rd settlment",member=findbyid(Member,1))
+    yield Place(country="Estonia",city="New City",postcode="11212",street="High Way",member=findbyid(Member,2))
     # yield Place(name="Tartu")
     # yield Place(name="Vigala")
     # yield Place(name="Haapsalu")
-    yield Member(id=1,firstname="Mahmoud",lastname="Mamdouh",email="sharedup@gmail.com",company="Excllent Serv")
-    yield Member(id=2,firstname="Luc",lastname="Saffre",email="luc@gmail.com",company="Lino")
+
 
 
     yield Provider(member=findbyid(Member, 1))
