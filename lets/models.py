@@ -38,7 +38,7 @@ class Provider(dd.Model):
     member = models.OneToOneField(Member)
 
     def __unicode__(self):
-        return "Provider: " + self.lastname
+        return "Provider: " + self.Member.lastname
 
 
 class Providers(dd.Table):
