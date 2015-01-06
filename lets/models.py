@@ -51,7 +51,7 @@ class Providers(dd.Table):
 
 
 class Customer(dd.Model):
-    member = models.OneToOneField(Member,primary_key=True)
+    member = models.OneToOneField(Member)
 
     def __unicode__(self):
         return "Customer:" + self.member
