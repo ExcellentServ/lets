@@ -23,14 +23,14 @@ def objects():
     """
     Place = resolve_model('lets.Place')
     Member = resolve_model('lets.Member')
-    Provider = resolve_model('lets.Provider')
-    Customer = resolve_model('lets.Customer')
+    Pro = resolve_model('lets.Provider')
+    Cus = resolve_model('lets.Customer')
     Product = resolve_model('lets.Product')
-    Offer = resolve_model('lets.Offer')
-    Demand = resolve_model('lets.Demand')
+    Off = resolve_model('lets.Offer')
+    Dem = resolve_model('lets.Demand')
 
-    yield Member(id=1,firstname="Mahmoud",lastname="Mamdouh",email="sharedup@gmail.com",company="Excllent Serv",date_joined= datetime.now())
-    yield Member(id=2,firstname="Luc",lastname="Saffre",email="luc@gmail.com",company="Lino",date_joined=datetime.now())
+    yield Member(id=1, firstname="Mahmoud", lastname="Mamdouh", email="sharedup@gmail.com", company="Excllent Serv", date_joined= datetime.now())
+    yield Member(id=2, firstname="Luc", lastname="Saffre", email="luc@gmail.com", company="Lino", date_joined=datetime.now())
 
 
     yield Place(country="Egypt",city="New Cairo",postcode="11212",street="3rd settlment",member=findbyid(Member,1))
@@ -39,15 +39,22 @@ def objects():
     # yield Place(name="Vigala")
     # yield Place(name="Haapsalu")
 
+    def provider(who):
+        return Pro(
+            member = findbyid(Member,who)
+        )
 
-
-    yield Provider(member=findbyid(Member, 1))
+    yield provider(1)
     # yield Provider(name="Argo", place=findbyname(Place, "Haapsalu"))
     # yield Provider(name=u"Tõnis", place=findbyname(Place, "Vigala"))
     # yield Provider(name="Anne", place=findbyname(Place, "Tallinn"))
     # yield Provider(name="Jaanika", place=findbyname(Place, "Tallinn"))
 
-    yield Customer(member=findbyid(Member, 2))
+    def customer(who):
+        return Cus(
+            member = findbyid(Member,who)
+        )
+    yield customer(2)
     # yield Customer(name="Henri", place=findbyname(Place, "Tallinn"))
     # yield Customer(name="Mare", place=findbyname(Place, "Tartu"))
     # yield Customer(name=u"Külliki", place=findbyname(Place, "Vigala"))
@@ -56,11 +63,22 @@ def objects():
     yield Product(name="HDD",price="350")
     yield Product(name="RAM",price="200")
 
-    yield Offer(product=findbyname(Product, "USB"), provider=findbyid(Provider, 1))
-    yield Offer(product=findbyname(Product, "RAM"), provider=findbyid(Provider, 1))
+    def offer(what, who):
+        return Off(
+            provider = findbyid(Member, who),
+            product = findbyname(Product, what)
+        )
+
+    yield offer("USB", 1)
+    # yield Offer(product=findbyname(Product, "RAM"), provider=findbyid(Provider, 1))
     # yield Offer(product=findbyname(Product, "Tatar"), provider=findbyname(Provider, "Priit"))
     # yield Offer(product=findbyname(Product, "Tatar"), provider=findbyname(Provider, "Anne"))
+    def demand(what, who):
+        return Dem(
+            customer = findbyid(Member, who),
+            product = findbyname(Product, what)
+        )
 
-    yield Demand(product=findbyname(Product, "RAM"), customer=findbyid(Customer, 2))
+    yield demand("RAM", 2)
     # yield Demand(product=findbyname(Product, "Kanamunad"), customer=findbyname(Customer, "Henri"))
     # yield Demand(product=findbyname(Product, "Kanamunad"), customer=findbyname(Customer, "Mare"))
