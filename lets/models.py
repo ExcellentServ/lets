@@ -69,9 +69,9 @@ class Customers(dd.Table):
 class Product(dd.Model):
     name = models.CharField(max_length=200)
     price = models.IntegerField(max_length=11)
-    valid_until = models.DateField(blank=True, null=True)
-    customer = models.ManyToManyField(Customer)
-    provider = models.ManyToManyField(Provider)
+    # valid_until = models.DateField(blank=True, null=True)
+    customer = models.ManyToManyField(Member,through='Demand',related_name='demanded_products')
+    provider = models.ManyToManyField(Member,through='Offer',related_name='offered_products')
 
     def __unicode__(self):
         return self.name + ": " + self.price
@@ -87,20 +87,19 @@ class Products(dd.Table):
 
 
 class Offer(dd.Model):
-    provider = Provider(Product.provider)
-    product = Product(Provider.pk)
-
+    provider = models.ForeignKey(Member)
+    product = models.ForeignKey(Product)
+    valid_until = models.DateField(blank=True, null=True)
 
     def __unicode__(self):
-        return "%s offered by %s" % (self.product, Provider.member.lastname)
+        return "%s offered by %s" % (self.product, self.provider)
 
 
 class Offers(dd.Table):
     model = Offer
 
-
 class OffersByProvider(Offers):
-    master_key = 'Offer.provider'
+    master_key = 'provider'
 
 
 class OffersByProduct(Offers):
@@ -108,11 +107,12 @@ class OffersByProduct(Offers):
 
 
 class Demand(dd.Model):
-    customer = Customer(Product.customer)
-    product = Product(Customer.pk)
+    customer = models.ForeignKey(Member)
+    product = models.ForeignKey(Product)
+    is_arrive = models.BooleanField(default=False)
 
     def __unicode__(self):
-        return "%s (%s)" % (self.product, Customer.member.lastname)
+        return "%s (%s)" % (self.product, self.provider)
 
 
 class Demands(dd.Table):
