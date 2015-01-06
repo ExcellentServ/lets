@@ -3,11 +3,31 @@ from django.db import models
 from lino import dd, rt
 
 
-class Place(dd.Model):
-    name = models.CharField(max_length=200)
+
+class Member(dd.Model):
+    firstname = models.CharField(max_length=50)
+    lastname = models.CharField(max_length=50)
+    email = models.CharField(max_length=50,unique=True)
+    company = models.CharField(max_length=50,default=None)
+    date_joined = models.DateField()
 
     def __unicode__(self):
-        return self.name
+        return "%s $s %s" % (self.firstname,self.lastname,self.email)
+
+
+class Members(dd.Table):
+    model = Member
+
+
+class Place(dd.Model):
+    country = models.CharField(max_length=50)
+    city = models.CharField(max_length=50)
+    postcode = models.PositiveSmallIntegerField(max_length=6)
+    street = models.CharField(max_length=200)
+    member = models.ForeignKey(Member)
+
+    def __unicode__(self):
+        return "%s, %s, %d, %s." % (self.country,self.city,self.postcode,self.street)
 
 
 class Places(dd.Table):
@@ -15,64 +35,64 @@ class Places(dd.Table):
 
 
 class Provider(dd.Model):
-    name = models.CharField(max_length=200)
-    place = models.ForeignKey(Place, blank=True, null=True)
-    email = models.EmailField(max_length=200, blank=True)
+    member = models.OneToOneField(Member,primary_key=True)
 
     def __unicode__(self):
-        return self.name
+        return "Provider: " + self.member
 
 
 class Providers(dd.Table):
     model = Provider
 
     detail_layout = """
-    id name place email
+    id lastname place email
     OffersByProvider
     """
 
 
 class Customer(dd.Model):
-    name = models.CharField(max_length=200)
-    place = models.ForeignKey(Place, blank=True, null=True)
-    email = models.EmailField(max_length=200, blank=True)
+    member = models.OneToOneField(Member,primary_key=True)
 
     def __unicode__(self):
-        return self.name
+        return "Customer:" + self.member
 
 
 class Customers(dd.Table):
     model = Customer
 
     detail_layout = """
-    id name place email
+    id lastname place email
     DemandsByCustomer
     """
 
 
 class Product(dd.Model):
     name = models.CharField(max_length=200)
+    price = models.IntegerField(max_length=11)
+    valid_until = models.DateField(blank=True, null=True)
+    customer = models.ManyToManyField(Customer)
+    provider = models.ManyToManyField(Provider)
 
     def __unicode__(self):
-        return self.name
+        return self.name + ": " + self.price
 
 
 class Products(dd.Table):
     model = Product
 
     detail_layout = """
-    id name
+    id name price
     OffersByProduct DemandsByProduct
     """
 
 
 class Offer(dd.Model):
-    provider = models.ForeignKey(Provider)
-    product = models.ForeignKey(Product)
-    valid_until = models.DateField(blank=True, null=True)
+    provider = Provider(Product.provider)
+    product = Product(Provider.pk)
+
 
     def __unicode__(self):
-        return "%s offered by %s" % (self.product, self.provider)
+        return "%s offered by %s" % (self.product, Provider.member.lastname)
 
 
 class Offers(dd.Table):
@@ -80,7 +100,7 @@ class Offers(dd.Table):
 
 
 class OffersByProvider(Offers):
-    master_key = 'provider'
+    master_key = 'Offer.provider'
 
 
 class OffersByProduct(Offers):
@@ -88,11 +108,11 @@ class OffersByProduct(Offers):
 
 
 class Demand(dd.Model):
-    customer = models.ForeignKey(Customer)
-    product = models.ForeignKey(Product)
+    customer = Customer(Product.customer)
+    product = Product(Customer.pk)
 
     def __unicode__(self):
-        return "%s (%s)" % (self.product, self.provider)
+        return "%s (%s)" % (self.product, Customer.member.lastname)
 
 
 class Demands(dd.Table):
