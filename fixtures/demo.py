@@ -21,7 +21,7 @@ def objects():
     Offer = resolve_model('lets.Offer')
     Demand = resolve_model('lets.Demand')
 
-    yield Place(name="Tallinn")
+    yield Place(country="Egypt",city="New Cairo",postcode="11212",street="3rd settlment")
     yield Place(name="Tartu")
     yield Place(name="Vigala")
     yield Place(name="Haapsalu")

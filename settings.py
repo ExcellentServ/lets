@@ -26,7 +26,7 @@ SITE = Site(globals(), 'lets')
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'lino2',
+        'NAME': 'lets',
 	'USER': 'root',
     }
 }

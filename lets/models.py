@@ -35,10 +35,10 @@ class Places(dd.Table):
 
 
 class Provider(dd.Model):
-    member = models.OneToOneField(Member,primary_key=True)
+    member = models.OneToOneField(Member)
 
     def __unicode__(self):
-        return "Provider: " + self.member
+        return "Provider: " + self.member.lastname
 
 
 class Providers(dd.Table):
