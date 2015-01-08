@@ -16,7 +16,7 @@ class Member(dd.Model):
     is_customer = EnableChild('Customer', verbose_name="is a customer")
 
     def __unicode__(self):
-        return "%s $s %s" % (self.firstname,self.lastname,self.email)
+        return "%s %s %s" % (self.firstname, self.lastname, self.email)
 
 
 class Place(dd.Model):
@@ -35,7 +35,7 @@ class Provider(Member):
     company = models.CharField(max_length=50,default=None)
 
     def __unicode__(self):
-        return "Provider: " + self.lastname
+        return "Provider: %s" % self.lastname
 
 
 # class Customer(dd.Model):
@@ -43,7 +43,7 @@ class Customer(Member):
     anything = models.CharField(max_length=50,blank=True)
 
     def __unicode__(self):
-        return "Customer:" + self.lastname
+        return "Customer: %s" % self.lastname
 
 class Product(dd.Model):
     name = models.CharField(max_length=200)
@@ -53,7 +53,7 @@ class Product(dd.Model):
     providers = models.ManyToManyField(Provider,through='Offer',related_name='offered_products')
 
     def __unicode__(self):
-        return self.name + ": " + self.price
+        return "{} : {}".format(self.name,self.price)
 
 
 class Offer(dd.Model):
