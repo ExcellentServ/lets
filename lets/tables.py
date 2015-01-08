@@ -1,54 +1,56 @@
 __author__ = 'drx'
-from django.db.models import Q
+#moved import dd,
 from lino import dd
-
-
-class Places(dd.Table):
-    model = 'lets.Place'
 
 
 class Members(dd.Table):
     model = 'lets.Member'
 
+
+class Places(dd.Table):
+    model = 'lets.Place'
+
     detail_layout = """
-    id name place email
-    OffersByMember DemandsByMember
+    PlacesByMember
+    """
+
+
+class Providers(dd.Table):
+    model = 'lets.Provider'
+    # lastname = Provider
+    detail_layout = """
+    id lastname email
+    PlacesByMember OffersByProvider DemandsByProduct
+    """
+
+
+class Customers(dd.Table):
+    model = 'lets.Customer'
+
+    detail_layout = """
+    id lastname email
+    PlacesByMember DemandsByCustomer
     """
 
 
 class Products(dd.Table):
     model = 'lets.Product'
-    order_by = ['name']
 
     detail_layout = """
-    id name
-    OffersByProduct DemandsByProduct
+    id name price
+    OffersByProduct DemandsByProduct DemandsByCustomer
     """
-
-    column_names = 'id name'
-
-
-class ActiveProducts(Products):
-
-    label = "Active products"
-    column_names = 'name offered_by demanded_by'
-
-    @classmethod
-    def get_request_queryset(cls, ar):
-        # add filter condition to the queryset so that only "active"
-        # products are shown, i.e. for which there is at least one
-        # offer or one demand.
-        qs = super(ActiveProducts, cls).get_request_queryset(ar)
-        qs = qs.filter(Q(offer__isnull=False) | Q(demand__isnull=False))
-        qs = qs.distinct()
-        return qs
 
 
 class Offers(dd.Table):
     model = 'lets.Offer'
 
 
-class OffersByMember(Offers):
+class Demands(dd.Table):
+    model = 'lets.Demand'
+
+
+class OffersByProvider(Offers):
     master_key = 'provider'
 
 
@@ -56,13 +58,21 @@ class OffersByProduct(Offers):
     master_key = 'product'
 
 
-class Demands(dd.Table):
-    model = 'lets.Demand'
-
-
-class DemandsByMember(Demands):
+class DemandsByCustomer(Demands):
     master_key = 'customer'
 
 
 class DemandsByProduct(Demands):
     master_key = 'product'
+
+
+class PlacesByMember(Places):
+    master_key = 'member'
+
+#
+# class ProductByProvider(Products):
+#     master_key = 'providers'
+#
+#
+# class ProductByCustomer(Products):
+#     master_key = 'customers'

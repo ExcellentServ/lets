@@ -5,7 +5,7 @@ from lino.utils import join_elems
 from lino.utils.xmlgen.html import E
 
 # We must import it so that it gets loaded together with the models.
-from .tables import *
+from .tables_post import *
 
 
 class Place(dd.Model):

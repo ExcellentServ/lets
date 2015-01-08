@@ -1,7 +1,8 @@
 
 from django.db import models
-from lino import dd, rt
+# from lino import rt
 from lino.utils.mti import EnableChild
+from .tables import *
 
 
 class Member(dd.Model):
@@ -17,10 +18,6 @@ class Member(dd.Model):
         return "%s $s %s" % (self.firstname,self.lastname,self.email)
 
 
-# class Members(dd.Table):
-#     model = Member
-
-
 class Place(dd.Model):
     country = models.CharField(max_length=50)
     city = models.CharField(max_length=50)
@@ -31,10 +28,6 @@ class Place(dd.Model):
     def __unicode__(self):
         return "%s, %s, %d, %s." % (self.country,self.city,self.postcode,self.street)
 
-#
-# class Places(dd.Table):
-#     model = Place
-
 
 # class Provider(dd.Model):
 class Provider(Member):
@@ -43,14 +36,6 @@ class Provider(Member):
     def __unicode__(self):
         return "Provider: " + self.lastname
 
-# class Providers(dd.Table):
-#     model = Provider
-#     # lastname = Provider
-#     detail_layout = """
-#     id lastname email
-#
-#     """
-
 
 # class Customer(dd.Model):
 class Customer(Member):
@@ -58,16 +43,6 @@ class Customer(Member):
 
     def __unicode__(self):
         return "Customer:" + self.lastname
-
-
-# class Customers(dd.Table):
-#     model = Customer
-#
-#     detail_layout = """
-#     id lastname email
-#
-#     """
-
 
 class Product(dd.Model):
     name = models.CharField(max_length=200)
@@ -80,15 +55,6 @@ class Product(dd.Model):
         return self.name + ": " + self.price
 
 
-# class Products(dd.Table):
-#     model = Product
-#
-#     detail_layout = """
-#     id name price
-#     OffersByProduct DemandsByProduct
-#     """
-
-
 class Offer(dd.Model):
     provider = models.ForeignKey(Provider)
     product = models.ForeignKey(Product)
@@ -97,16 +63,6 @@ class Offer(dd.Model):
     def __unicode__(self):
         return "%s offered by %s" % (self.product, self.provider)
 
-
-# class Offers(dd.Table):
-#     model = Offer
-
-# class OffersByProvider(Offers):
-#     master_key = 'provider'
-#
-#
-# class OffersByProduct(Offers):
-#     master_key = 'product'
 
 
 class Demand(dd.Model):
@@ -118,8 +74,6 @@ class Demand(dd.Model):
         return "%s (%s)" % (self.product, self.provider)
 
 
-# class Demands(dd.Table):
-#     model = Demand
 
 
 # class DemandsByCustomer(Demands):
