@@ -21,15 +21,15 @@ class Site(Site):
     #     m.add_action(self.modules.lets.Places)
     def setup_menu(self, ui, profile, main):
         m = main.add_menu("master", "Master")
-        m.add_action(self.modules.lets.Members)
-        m.add_action(self.modules.lets.Products)
+        # m.add_action(self.modules.lets.Members)
+        # m.add_action(self.modules.lets.Products)
 
         m = main.add_menu("market", "Market")
-        m.add_action(self.modules.lets.Offers)
-        m.add_action(self.modules.lets.Demands)
+        # m.add_action(self.modules.lets.Offers)
+        # m.add_action(self.modules.lets.Demands)
 
         m = main.add_menu("config", "Configure")
-        m.add_action(self.modules.lets.Places)
+        # m.add_action(self.modules.lets.Places)
 
     def get_admin_main_items(self):
 
