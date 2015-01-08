@@ -1,5 +1,6 @@
 
 from django.db import models
+#why we import it?!
 # from lino import rt
 from lino.utils.mti import EnableChild
 from .tables import *
@@ -39,7 +40,7 @@ class Provider(Member):
 
 # class Customer(dd.Model):
 class Customer(Member):
-    anything = models.CharField(max_length=50,default=None)
+    anything = models.CharField(max_length=50,blank=True)
 
     def __unicode__(self):
         return "Customer:" + self.lastname
@@ -72,23 +73,3 @@ class Demand(dd.Model):
 
     def __unicode__(self):
         return "%s (%s)" % (self.product, self.provider)
-
-
-
-
-# class DemandsByCustomer(Demands):
-#     master_key = 'customer'
-#
-#
-# class DemandsByProduct(Demands):
-#     master_key = 'product'
-#
-# class PlacesByMember(Places):
-#     master_key = 'member'
-
-#
-# class ProductByProvider(Products):
-#     master_key = 'providers'
-#
-# class ProductByCustomer(Products):
-#     master_key = 'customers'

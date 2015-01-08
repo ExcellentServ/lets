@@ -11,6 +11,7 @@ class Places(dd.Table):
     model = 'lets.Place'
 
     detail_layout = """
+    id country city postcode street
     PlacesByMember
     """
 
