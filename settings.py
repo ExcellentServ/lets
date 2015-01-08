@@ -31,9 +31,9 @@ class Site(Site):
         m = main.add_menu("config", "Configure")
         # m.add_action(self.modules.lets.Places)
 
-    def get_admin_main_items(self):
-
-        yield self.modules.lets.ActiveProducts
+    # def get_admin_main_items(self):
+    #
+    #     yield self.modules.lets.ActiveProducts
 
 #~ SITE = Site(globals(),'lino.modlib.users','lino.tutorials.lets1.lets')
 SITE = Site(globals(), 'lets')

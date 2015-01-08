@@ -138,4 +138,3 @@ class Demand(dd.Model):
 #
 # class ProductByCustomer(Products):
 #     master_key = 'customers'
-
