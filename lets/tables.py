@@ -39,7 +39,7 @@ class Products(dd.Table):
 
     detail_layout = """
     id name price
-    OffersByProduct DemandsByProduct DemandsByCustomer
+    OffersByProduct DemandsByProduct PlacesByMember
     """
 
 
@@ -69,11 +69,3 @@ class DemandsByProduct(Demands):
 
 class PlacesByMember(Places):
     master_key = 'member'
-
-#
-# class ProductByProvider(Products):
-#     master_key = 'providers'
-#
-#
-# class ProductByCustomer(Products):
-#     master_key = 'customers'

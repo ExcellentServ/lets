@@ -24,12 +24,6 @@ class Site(Site):
     #     yield self.modules.lets.ActiveProducts
 
 SITE = Site(globals(), 'lets')
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'lets',
-	'USER': 'root',
-    }
-}
+
 DEBUG = True
 
