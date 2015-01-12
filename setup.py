@@ -7,5 +7,7 @@ if __name__ == '__main__':
         install_requires=["lino"],
         description="My sandbox version of the Lino LETS tutorial application",
         author="Mahmoud Mamdouh",
-        author_email="sharedup@gmail.com"
+        author_email="sharedup@gmail.com",
+        url="http://www.iamdevops.com/",
+        packages=['xserv_lets']
     )
