@@ -4,11 +4,11 @@ from lino import dd
 
 
 class Members(dd.Table):
-    model = 'xserv_lets.Member'
+    model = 'lets.Member'
 
 
 class Places(dd.Table):
-    model = 'xserv_lets.Place'
+    model = 'lets.Place'
 
     detail_layout = """
     id country city postcode street
@@ -17,7 +17,7 @@ class Places(dd.Table):
 
 
 class Providers(dd.Table):
-    model = 'xserv_lets.Provider'
+    model = 'lets.Provider'
     # lastname = Provider
     detail_layout = """
     id lastname email
@@ -26,7 +26,7 @@ class Providers(dd.Table):
 
 
 class Customers(dd.Table):
-    model = 'xserv_lets.Customer'
+    model = 'lets.Customer'
 
     detail_layout = """
     id lastname email
@@ -35,7 +35,7 @@ class Customers(dd.Table):
 
 
 class Products(dd.Table):
-    model = 'xserv_lets.Product'
+    model = 'lets.Product'
 
     detail_layout = """
     id name price
@@ -44,11 +44,11 @@ class Products(dd.Table):
 
 
 class Offers(dd.Table):
-    model = 'xserv_lets.Offer'
+    model = 'lets.Offer'
 
 
 class Demands(dd.Table):
-    model = 'xserv_lets.Demand'
+    model = 'lets.Demand'
 
 
 class OffersByProvider(Offers):
